@@ -51,7 +51,12 @@ from dashwebmcp.relay import (
     get_js_bridge_content,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
+
+# Convenience flag - True when this package is successfully imported
+# Useful for checking if dashwebmcp is installed
+DASHWEBMCP_AVAILABLE = True
+
 __all__ = [
     "MCPRelay",
     "BrowserSession",
@@ -60,6 +65,7 @@ __all__ = [
     "websocket_bridge",
     "SESSIONS",
     "MCP_AVAILABLE",
+    "DASHWEBMCP_AVAILABLE",
     "ALLOWED_ORIGINS",
     "get_js_bridge_path",
     "get_js_bridge_content",

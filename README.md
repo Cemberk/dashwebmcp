@@ -213,6 +213,29 @@ AI Agent (Claude/GPT)
 - WebSocket origin validation
 - Optional human confirmation
 - Read-only annotations for safe tools
+- **Automatic protocol fix**: WebSocket connections automatically use `wss://` on HTTPS pages
+
+## Checking Availability
+
+```python
+from dashwebmcp import DASHWEBMCP_AVAILABLE, MCP_AVAILABLE
+
+if DASHWEBMCP_AVAILABLE:
+    print("dashwebmcp package is installed")
+    
+if MCP_AVAILABLE:
+    print("MCP SDK is also installed")
+```
+
+## Changelog
+
+### 0.1.1
+- Added `DASHWEBMCP_AVAILABLE` flag to exports for easy availability checking
+- Built-in WebSocket protocol fix: automatically converts `ws://` to `wss://` on HTTPS pages
+- Fixes mixed content issues on production HTTPS deployments
+
+### 0.1.0
+- Initial release
 
 ## License
 

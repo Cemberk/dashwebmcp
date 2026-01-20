@@ -1,5 +1,5 @@
 /**
- * MAD Dashboard MCP Bridge
+ * DashWebMCP Bridge
  * 
  * Client-side runtime for MCP tool registration and execution.
  * This script runs in the browser and:
@@ -12,6 +12,34 @@
  *   AI Agent → MCP Server → WebSocket → This Script → Tool Execution → Result
  */
 
+// ==========================================================================
+// PROTOCOL FIX: Ensure WebSocket uses wss:// on HTTPS pages
+// ==========================================================================
+// This fixes issues where some browsers or configurations may try to use
+// ws:// on HTTPS pages, which modern browsers block as mixed content.
+(function() {
+    'use strict';
+    const originalWebSocket = window.WebSocket;
+    window.WebSocket = function(url, protocols) {
+        // Fix protocol mismatch: ws:// on https:// pages should be wss://
+        if (window.location.protocol === 'https:' && url.startsWith('ws://')) {
+            url = url.replace('ws://', 'wss://');
+            console.log('[DashMCP] Fixed WebSocket protocol to wss://', url);
+        }
+        return protocols !== undefined 
+            ? new originalWebSocket(url, protocols)
+            : new originalWebSocket(url);
+    };
+    window.WebSocket.prototype = originalWebSocket.prototype;
+    window.WebSocket.CONNECTING = originalWebSocket.CONNECTING;
+    window.WebSocket.OPEN = originalWebSocket.OPEN;
+    window.WebSocket.CLOSING = originalWebSocket.CLOSING;
+    window.WebSocket.CLOSED = originalWebSocket.CLOSED;
+})();
+
+// ==========================================================================
+// MAIN MCP BRIDGE
+// ==========================================================================
 (function() {
     'use strict';
 
